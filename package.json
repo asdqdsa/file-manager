@@ -1,0 +1,26 @@
+{
+  "name": "file-manager",
+  "version": "0.1.0",
+  "description": "this is a basic implementation of a file-manager",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": ">=24.10.0",
+    "npm": ">=10.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asdqdsa/file-manager.git"
+  },
+  "keywords": [
+    "nodejs",
+    "filemanager",
+    "asdqdsa"
+  ],
+  "author": "asdqdsa",
+  "license": "ISC",
+  "packageManager": "pnpm@10.19.0"
+}
