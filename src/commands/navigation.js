@@ -1,5 +1,7 @@
+import os from "os";
 import fsPromises from "fs/promises";
 import { messages } from "../utils/messages.js";
+import path from "path";
 
 const lang = "fr";
 const t = messages[lang];
@@ -21,6 +23,34 @@ export const navigationCommands = {
       );
     } catch {
       throw new Error(t.operationFailed);
+    }
+  },
+
+  up(currDir) {
+    const parentDir = path.dirname(currDir);
+    if (currDir === os.homedir()) {
+      return currDir;
+    } else {
+      return parentDir;
+    }
+  },
+
+  async cd(currDir, targetDir) {
+    console.log(targetDir);
+    if (!targetDir) {
+      console.log(t.invalidInput);
+      return;
+    }
+    try {
+      const absolutePath = path.resolve(currDir, targetDir);
+      const stats = await fsPromises.stat(absolutePath);
+      if (!stats.isDirectory()) {
+        throw new Error();
+      }
+      return path.normalize(absolutePath);
+    } catch {
+      console.error(t.operationFailed);
+      return;
     }
   },
 };

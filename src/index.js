@@ -17,7 +17,7 @@ if (!user) {
 console.log(t.welcome(user));
 
 let currDir = os.homedir();
-const printDir = () => console.log(t.cwd(currDir));
+const printDir = (dir = currDir) => console.log(t.cwd(dir));
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -28,17 +28,21 @@ printDir();
 rl.prompt();
 
 rl.on("line", async (input) => {
-  const command = input.trim();
+  const [command, ...args] = input.trim().split(/\s+/);
   if (command === ".exit") {
     console.log(t.goodbye(user));
     rl.close();
     process.exit();
   } else if (command === "ls") {
     await navigationCommands.ls(currDir);
+  } else if (command === "up") {
+    currDir = navigationCommands.up(currDir);
+  } else if (command === "cd") {
+    currDir = (await navigationCommands.cd(currDir, args[0])) || currDir;
   } else {
     console.error(t.operationFailed);
-    printDir();
   }
+  printDir(currDir);
 });
 
 rl.on("SIGINT", () => {
