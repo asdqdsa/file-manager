@@ -8,10 +8,15 @@ export const navigationCommands = {
   async ls(currDir) {
     try {
       const files = await fsPromises.readdir(currDir, { withFileTypes: true });
+      const sorted = files.toSorted((a, b) => {
+        if (a.isDirectory() && !b.isDirectory()) return -1;
+        if (!a.isDirectory() && b.isDirectory()) return 1;
+        return a.name.localeCompare(b.name);
+      });
       console.table(
-        files.map((file) => ({
+        sorted.map((file) => ({
           Name: file.name,
-          Type: file.isFile() ? "file" : "directory",
+          Type: file.isDirectory() ? "directory" : "file",
         })),
       );
     } catch {
