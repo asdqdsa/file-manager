@@ -1,11 +1,12 @@
 import os from "node:os";
 import readline from "node:readline";
+import { zipCommands } from "./commands/compression.js";
 import { filesCommands } from "./commands/files.js";
+import { hashCommand } from "./commands/hash.js";
 import { navigationCommands } from "./commands/navigation.js";
+import { osCommands } from "./commands/system.js";
 import { messages } from "./utils/messages.js";
 import { parseArgs } from "./utils/parseArgs.js";
-import { osCommands } from "./commands/system.js";
-import { hashCommand } from "./commands/hash.js";
 
 const lang = "fr";
 const t = messages[lang];
@@ -62,6 +63,10 @@ rl.on("line", async (input) => {
     await osCommands(args[0]);
   } else if (command === "hash") {
     await hashCommand(currDir, args[0]);
+  } else if (command === "compress") {
+    await zipCommands.compress(currDir, args[0], args[1]);
+  } else if (command === "decompress") {
+    await zipCommands.decompress(currDir, args[0], args[1]);
   } else {
     console.error(t.operationFailed);
   }
