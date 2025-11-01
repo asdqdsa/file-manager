@@ -4,5 +4,5 @@ A File Manager
 
 ```bash
 pnpm i # install
-pnpm start # start the application
+pnpm run start -- [--username=<your_username>] [--lang=<en|fr>]  # run with args
 ```
