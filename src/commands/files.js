@@ -1,7 +1,7 @@
 import { createReadStream, createWriteStream } from "node:fs";
 import fsPromises from "node:fs/promises";
-import path, { isAbsolute } from "node:path";
 import { t } from "../i18n/index.js";
+import { resolvePath } from "../utils/resolvePath.js";
 
 export const filesCommands = {
   async cat(currDir, targetDir) {
@@ -10,9 +10,7 @@ export const filesCommands = {
       return;
     }
 
-    const src = path.normalize(
-      isAbsolute(targetDir) ? targetDir : path.join(currDir, targetDir),
-    );
+    const src = resolvePath(currDir, targetDir);
 
     try {
       const stream = createReadStream(src);
@@ -30,13 +28,8 @@ export const filesCommands = {
       return;
     }
 
-    const srcPath = path.normalize(
-      isAbsolute(srcName) ? srcName : path.join(currDir, srcName),
-    );
-
-    const destPath = path.normalize(
-      isAbsolute(destName) ? destName : path.join(currDir, destName),
-    );
+    const srcPath = resolvePath(currDir, srcName);
+    const destPath = resolvePath(currDir, destName);
 
     return new Promise((resolve, reject) => {
       let readable, writeble;
@@ -84,9 +77,7 @@ export const filesCommands = {
       return;
     }
 
-    const target = path.normalize(
-      isAbsolute(targetDir) ? targetDir : path.join(currDir, targetDir),
-    );
+    const target = resolvePath(currDir, targetDir);
 
     try {
       await fsPromises.writeFile(target, "", { flag: "wx" });
@@ -101,9 +92,7 @@ export const filesCommands = {
       return;
     }
 
-    const target = path.normalize(
-      isAbsolute(targetDir) ? targetDir : path.join(currDir, targetDir),
-    );
+    const target = resolvePath(currDir, targetDir);
 
     try {
       await fsPromises.unlink(target);
@@ -119,9 +108,7 @@ export const filesCommands = {
       return;
     }
 
-    const dirPath = path.normalize(
-      isAbsolute(targetDir) ? targetDir : path.join(currDir, targetDir),
-    );
+    const dirPath = resolvePath(currDir, targetDir);
 
     try {
       await fsPromises.mkdir(dirPath);
@@ -137,9 +124,7 @@ export const filesCommands = {
       return;
     }
 
-    const dirPath = path.normalize(
-      isAbsolute(targetDir) ? targetDir : path.join(currDir, targetDir),
-    );
+    const dirPath = resolvePath(currDir, targetDir);
 
     try {
       await fsPromises.rmdir(dirPath);
@@ -155,12 +140,8 @@ export const filesCommands = {
       return;
     }
 
-    const currPath = path.normalize(
-      isAbsolute(srcName) ? srcName : path.join(currDir, srcName),
-    );
-    const newPath = path.normalize(
-      isAbsolute(newName) ? newName : path.join(currDir, newName),
-    );
+    const currPath = resolvePath(currDir, srcName);
+    const newPath = resolvePath(currDir, newName);
 
     try {
       await fsPromises.rename(currPath, newPath);
@@ -176,13 +157,8 @@ export const filesCommands = {
       return;
     }
 
-    const srcPath = path.normalize(
-      isAbsolute(srcName) ? srcName : path.join(currDir, srcName),
-    );
-
-    const destPath = path.normalize(
-      isAbsolute(destName) ? destName : path.join(currDir, destName),
-    );
+    const srcPath = resolvePath(currDir, srcName);
+    const destPath = resolvePath(currDir, destName);
 
     try {
       await fsPromises.cp(srcPath, destPath, {

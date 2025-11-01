@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import { createReadStream } from "node:fs";
-import path, { isAbsolute } from "node:path";
 import { t } from "../i18n/index.js";
+import { resolvePath } from "../utils/resolvePath.js";
 
 export const hashCommand = async (currDir, srcFile) => {
   if (!srcFile) {
@@ -9,9 +9,7 @@ export const hashCommand = async (currDir, srcFile) => {
     return;
   }
 
-  const src = path.normalize(
-    isAbsolute(srcFile) ? srcFile : path.join(currDir, srcFile),
-  );
+  const src = resolvePath(currDir, srcFile);
 
   try {
     const hash = crypto.createHash("sha256");

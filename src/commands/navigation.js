@@ -34,12 +34,14 @@ export const navigationCommands = {
       console.log(t.invalidInput);
       return;
     }
+
     try {
       const absolutePath = path.resolve(currDir, targetDir);
       const stats = await fsPromises.stat(absolutePath);
       if (!stats.isDirectory()) {
         throw new Error();
       }
+
       return path.normalize(absolutePath);
     } catch {
       console.error(t.operationFailed);

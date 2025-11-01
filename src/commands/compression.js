@@ -3,6 +3,7 @@ import path, { isAbsolute } from "node:path";
 import { pipeline } from "node:stream/promises";
 import zlib from "node:zlib";
 import { t } from "../i18n/index.js";
+import { resolvePath } from "../utils/resolvePath.js";
 
 export const zipCommands = {
   async compress(currDir, srcDir, targetDir) {
@@ -11,13 +12,8 @@ export const zipCommands = {
       return;
     }
 
-    const src = path.normalize(
-      isAbsolute(srcDir) ? srcDir : path.join(currDir, srcDir),
-    );
-
-    const target = path.normalize(
-      isAbsolute(targetDir) ? targetDir : path.join(currDir, targetDir),
-    );
+    const src = resolvePath(currDir, srcDir);
+    const target = resolvePath(currDir, targetDir);
 
     try {
       const readable = createReadStream(src);
@@ -36,13 +32,8 @@ export const zipCommands = {
       return;
     }
 
-    const src = path.normalize(
-      isAbsolute(srcDir) ? srcDir : path.join(currDir, srcDir),
-    );
-
-    const target = path.normalize(
-      isAbsolute(targetDir) ? targetDir : path.join(currDir, targetDir),
-    );
+    const src = resolvePath(currDir, srcDir);
+    const target = resolvePath(currDir, targetDir);
 
     try {
       const readable = createReadStream(src);
