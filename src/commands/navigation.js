@@ -22,21 +22,18 @@ export const navigationCommands = {
         })),
       );
     } catch {
-      throw new Error(t.operationFailed);
+      console.error(t.operationFailed);
     }
   },
 
   up(currDir) {
-    const parentDir = path.dirname(currDir);
-    if (currDir === os.homedir()) {
+    if (currDir === path.parse(currDir).root) {
       return currDir;
-    } else {
-      return parentDir;
     }
+    return path.dirname(currDir);
   },
 
   async cd(currDir, targetDir) {
-    console.log(targetDir);
     if (!targetDir) {
       console.log(t.invalidInput);
       return;
