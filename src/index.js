@@ -5,6 +5,7 @@ import { navigationCommands } from "./commands/navigation.js";
 import { messages } from "./utils/messages.js";
 import { parseArgs } from "./utils/parseArgs.js";
 import { osCommands } from "./commands/system.js";
+import { hashCommand } from "./commands/hash.js";
 
 const lang = "fr";
 const t = messages[lang];
@@ -59,6 +60,8 @@ rl.on("line", async (input) => {
     await filesCommands.move(currDir, args[0], args[1]);
   } else if (command === "os") {
     await osCommands(args[0]);
+  } else if (command === "hash") {
+    await hashCommand(currDir, args[0]);
   } else {
     console.error(t.operationFailed);
   }
