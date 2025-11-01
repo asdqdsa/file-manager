@@ -1,1 +1,0 @@
-const LANGUAGES = ["en", "fr"];

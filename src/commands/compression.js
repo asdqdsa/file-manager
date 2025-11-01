@@ -2,10 +2,7 @@ import { createReadStream, createWriteStream } from "node:fs";
 import path, { isAbsolute } from "node:path";
 import { pipeline } from "node:stream/promises";
 import zlib from "node:zlib";
-import { messages } from "../utils/messages.js";
-
-const lang = "fr";
-const t = messages[lang];
+import { t } from "../i18n/index.js";
 
 export const zipCommands = {
   async compress(currDir, srcDir, targetDir) {
@@ -28,7 +25,6 @@ export const zipCommands = {
       const zip = zlib.createBrotliCompress();
 
       await pipeline(readable, zip, writable);
-      console.log(t.operationSuccess);
     } catch {
       console.error(t.invalidInput);
     }
@@ -54,7 +50,6 @@ export const zipCommands = {
       const unzip = zlib.createBrotliDecompress();
 
       await pipeline(readable, unzip, writable);
-      console.log(t.operationSuccess);
     } catch {
       console.error(t.operationFailed);
     }

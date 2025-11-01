@@ -1,10 +1,7 @@
 import crypto from "node:crypto";
 import { createReadStream } from "node:fs";
 import path, { isAbsolute } from "node:path";
-import { messages } from "../utils/messages.js";
-
-const lang = "fr";
-const t = messages[lang];
+import { t } from "../i18n/index.js";
 
 export const hashCommand = async (currDir, srcFile) => {
   if (!srcFile) {

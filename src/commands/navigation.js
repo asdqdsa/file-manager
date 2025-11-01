@@ -1,10 +1,6 @@
-import os from "os";
 import fsPromises from "fs/promises";
-import { messages } from "../utils/messages.js";
-import path from "path";
-
-const lang = "fr";
-const t = messages[lang];
+import path from "node:path";
+import { t } from "../i18n/index.js";
 
 export const navigationCommands = {
   async ls(currDir) {

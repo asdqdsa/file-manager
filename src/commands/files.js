@@ -1,10 +1,7 @@
 import { createReadStream, createWriteStream } from "node:fs";
 import fsPromises from "node:fs/promises";
 import path, { isAbsolute } from "node:path";
-import { messages } from "../utils/messages.js";
-
-const lang = "fr";
-const t = messages[lang];
+import { t } from "../i18n/index.js";
 
 export const filesCommands = {
   async cat(currDir, targetDir) {
@@ -65,7 +62,6 @@ export const filesCommands = {
       });
 
       writeble.on("finish", () => {
-        console.log(t.operationSuccess);
         resolve();
       });
 
@@ -77,7 +73,6 @@ export const filesCommands = {
     try {
       await this.copy(currDir, srcName, destName);
       await this.remove(currDir, srcName);
-      console.log(t.operationSuccess);
     } catch {
       console.error(t.operationFailed);
     }
@@ -95,7 +90,6 @@ export const filesCommands = {
 
     try {
       await fsPromises.writeFile(target, "", { flag: "wx" });
-      console.log(t.operationSuccess);
     } catch {
       console.error(t.operationFailed);
     }

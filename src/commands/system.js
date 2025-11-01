@@ -1,8 +1,5 @@
 import os from "node:os";
-import { messages } from "../utils/messages.js";
-
-const lang = "fr";
-const t = messages[lang];
+import { t } from "../i18n/index.js";
 
 export const osCommands = async (flag) => {
   switch (flag) {

@@ -5,13 +5,10 @@ import { filesCommands } from "./commands/files.js";
 import { hashCommand } from "./commands/hash.js";
 import { navigationCommands } from "./commands/navigation.js";
 import { osCommands } from "./commands/system.js";
-import { messages } from "./utils/messages.js";
+import { t } from "./i18n/index.js";
 import { parseArgs } from "./utils/parseArgs.js";
 
-const lang = "fr";
-const t = messages[lang];
-
-const user = parseArgs();
+const { user } = parseArgs();
 
 if (!user) {
   console.error(t.invalidInput);
